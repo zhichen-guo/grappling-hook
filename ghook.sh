@@ -1,25 +1,44 @@
 #!/bin/bash
 #ghook.sh (grappling hook)
 
-moving_path=$(pwd)
-
 find_directory() {
-  while [ "$moving_path" != "/" ]; do
-    if [ -d "$moving_path/.git" ]; then
-      echo "$moving_path"
+  local path="$1"
+  while [ "$path" != "/" ]; do
+    if [ -d "$path/.git" ]; then
+      echo "$path"
       return
     fi
 
-    moving_path=$(dirname "$moving_path")
+    path=$(dirname "$path")
   done
 }
 
+find_directory_with_stop() {
+  local target_dir="$1"
+  local path="$2"
+  while [ "$path" != "/" ]; do
+    if [ -d "$path/.git" ]; then
+      echo "$path"
+      return
+    elif [ "$target_dir" == $(basename "$path") ]; then
+      echo "$path"
+      return
+    fi
 
-# If a directory name is passed, find the specified directory
-target_directory=$(find_directory)
+    path=$(dirname "$path")
+  done
+}
+
+current_path=$(pwd)
+
+if [ -z "$1" ]; then
+  target_directory=$(find_directory "$current_path")
+else
+  target_directory=$(find_directory_with_stop "$1" "$current_path")
+fi
 
 if [ -n "$target_directory" ]; then
-  cd "$target_directory" && echo "$target_directory"
+  echo "$target_directory"
 else
-  echo "No root git repo found"
+  echo "."
 fi
