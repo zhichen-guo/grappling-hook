@@ -31,17 +31,17 @@ root
 ```
 
 1. Use the function without any variables to `cd` from the working directory to the nearest parent directory with a `.git`.
-```shellscript
+```console
 dir3~$ hook
 root~$
 ```
 2. To `cd` to an intermediate directory on the path from the working directory to the nearest parent directory with a `.git`, pass the name as a variable
-```shellscript
+```console
 dir3~$ hook dir1
 dir1~$
 ```
 &nbsp;&nbsp;&nbsp;&nbsp; The variable must match the name of an intermediate directory.
-```shellscript
+```console
 dir3~$ hook banana
 dir3~$
 ```
