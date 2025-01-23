@@ -19,30 +19,31 @@ function hook() {
 
 For the following example file tree:
 ```
-root
-|- .git
-|- blah
-+- dir1
+/
+|- root
+    |- .git
     |- blah
-    |- dir2
-    |   +- blah
-    +- dir3
-        +- *YOU'RE HERE* (root/dir1/dir3)
+    +- dir1
+        |- blah
+        |- dir2
+        |   +- blah
+        +- dir3
+            +- *YOU'RE HERE* (/root/dir1/dir3)
 ```
 
 1. Use the function without any variables to `cd` from the working directory to the nearest parent directory with a `.git`.
 ```console
-dir3~$ hook
-root~$
+/root/dir1/dir3~$ hook
+/root~$
 ```
 2. To `cd` to an intermediate directory on the path from the working directory to the nearest parent directory with a `.git`, pass the name as a variable
 ```console
-dir3~$ hook dir1
-dir1~$
+/root/dir1/dir3~$ hook dir1
+/root/dir1~$
 ```
 &nbsp;&nbsp;&nbsp;&nbsp; The variable must match the name of an intermediate directory.
 ```console
-dir3~$ hook banana
-dir3~$
+/root/dir1/dir3~$ hook banana
+/root/dir1/dir3~$
 ```
 
